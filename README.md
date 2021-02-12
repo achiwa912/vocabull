@@ -13,7 +13,7 @@ VocaBull is a small command line tool that helps your vocabulary building.
 ```bash
 python vb.py <WordBookFile>
 ```
-You can use samples.txt included in this repository as a sample word book file which includes 10 words.  First, you will be greeted like this.  As you use samples.txt, it loads just 10 files.
+You can use samples.txt (included in this repository) as a sample word book file which includes 10 words.  First, you will be greeted like this.  As you use samples.txt, it loads just 10 files.
 
 ```bash
 % python vb.py samples.txt 
@@ -59,6 +59,10 @@ The "learning window" consists of about 10 outstanding words.  The tool gives yo
 
 If the number of words in the word book are relatively big (100 or more), the tool will split the entire words into chapters/sets that each has 100 words (or less).  When you run the tool and if the word book is large, you'll be asked which set/chapter to study.  A set is also called a "learning set".
 
+* Learning Window - 10 currently memorizing words.  As you memorize words, the learning window (kind of) moves within the learning set.
+* Learning Set - A chapter/set of a word book and a learning set has 100 words.  The current learning set is the one you are studying now.
+* Learning Book - The word book that can have as many words as you want.
+
 ## The commands
 
 You can use commands when you see this "*** S: save..." message.
@@ -70,19 +74,44 @@ Instead of typing the word, you can type "S", "L" or "Q".
 
 "S" is for save.  It will save your progress.  The saved data will be loaded automatically when you run the tool with the same word book.  The save file name is <wordfile>.pickle.
 
+```
+    *** S: save, L: show learning set, Q: save and quit
+    high praise? S
+Saved 10 words to samples.pickle
+    *** S: save, L: show learning set, Q: save and quit
+    high praise? 
+```
+
 "L" shows the "current learning set".  The current learning set is the set/chapter that you are currently studying.
 
+```
+    *** S: save, L: show learning set, Q: save and quit
+    high praise? L
+0 hyperbole - 0/0/0/1
+1 munificent - 1/0/1/0
+2 prevarication - 1/0/1/0
+3 tyro - 1/0/1/0
+<snip>
+```
+
 "Q" is for save&quit.  If you don't want to save your progress, you can use Ctrl-C to aboart the tool.
+
+# Rationale
+
+To be upated.
+
 
 # Word book file format
 
 vb.py supports two word book file format types.
 
-The first one is <word> <meaning> <sentence> separated by tabs '\t'.  <sentence> is optional.  For example,
+The first one is "word" "meaning" "sentence" separated by tabs '\t'.  "sentence" is optional.  For example,
 
 ```
 hyperbole	exaggerated figure of speech	The rhetoric soared into lagrant hyperbole.
 ```
+The good thing about this format is that you can just copy and paste to create a word book file from various web sites such as: https://www.majortests.com/sat/wordlist.php  Note that sample sentences are optional.
+
 
 The second format type is:
 ```
@@ -91,7 +120,7 @@ The second format type is:
 <meaning>
 <sentence>
 ```
-The "--" line is a word separator line.  The top and bottom line needs to be the separator lines.  <sentence> is also optional.
+The "--" line is a word separator line.  The top and bottom lines need to be the separator lines.  "sentence" is also optional.  samples.txt included in the repository is of this format type.
 
 # License info
 
