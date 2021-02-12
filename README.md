@@ -13,23 +13,23 @@ VocaBull is a small command line tool that helps your vocabulary building.
 ```bash
 python vb.py <WordBookFile>
 ```
-You can use samples.txt as a sample word book file which includes 10 words.
-First, you will be greeted like this.  As you use samples.txt, it loads just 10 files.
+You can use samples.txt included in this repository as a sample word book file which includes 10 words.  First, you will be greeted like this.  As you use samples.txt, it loads just 10 files.
 
 ```bash
 % python vb.py samples.txt 
 === VocaBull - Help your vocabulary building ===
     10 words loaded.
 ```
-Then practice starts.  You are now prompted to type a word to memorize.
 
 ## How to practice
+
+Then practice starts.  You are now prompted to type a word to memorize.  You are asked what is the word for "exaggerated figure of speech" and you need to type the word.
 
 ```bash
     *** S: save, L: show learning set, Q: save and quit
     exaggerated figure of speech? 
 ```
-You can't guess the word so typed as "aaa".
+As you can't guess the word, you typed as "aaa".
 
 ```bash
     exaggerated figure of speech? aaa        
@@ -38,7 +38,18 @@ You can't guess the word so typed as "aaa".
     exaggerated figure of speech: hyperbole
 1/4 exaggerated figure of speech?
 ```
-The answer was "hyperbole".  You need to type the word for 4 times to proceed to the next quiz.
+The answer was "hyperbole".  The line starts with '>' is the sample sentence if one is in the word book file.  You need to type the word for 4 times to proceed to the next quiz.
+
+```bash
+1/4 exaggerated figure of speech? hyperbole
+2/4 exaggerated figure of speech? hyperbole
+3/4 exaggerated figure of speech? hyperbole
+4/4 exaggerated figure of speech? hyperbole
+---
+    *** S: save, L: show learning set, Q: save and quit
+    generous?
+```
+Then, you are asked the next word.  What is one for "generous"?
 
 ## The learning window and the learning set
 
@@ -63,6 +74,24 @@ Instead of typing the word, you can type "S", "L" or "Q".
 
 "Q" is for save&quit.  If you don't want to save your progress, you can use Ctrl-C to aboart the tool.
 
+# Word book file format
+
+vb.py supports two word book file format types.
+
+The first one is <word> <meaning> <sentence> separated by tabs '\t'.  <sentence> is optional.  For example,
+
+```
+hyperbole	exaggerated figure of speech	The rhetoric soared into lagrant hyperbole.
+```
+
+The second format type is:
+```
+--
+<word>
+<meaning>
+<sentence>
+```
+The "--" line is a word separator line.  The top and bottom line needs to be the separator lines.  <sentence> is also optional.
 
 # License info
 
