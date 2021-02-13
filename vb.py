@@ -9,7 +9,13 @@ config = {
     'lset_size': 100,  # learning set size
     'repeat_count': 3,  # repeat count to memorize
     'penalty_count': 4,  # repeat count when incorrect
-    'debug': True,
+    'debug': False,
+}
+
+track_progress = {
+    'pass': 0,  # today's pass count
+    'fail': 0,  # today's fail count
+    'memorized_count': 0,  # today's memorized count
 }
 
 
@@ -49,8 +55,8 @@ def fill_lwin(lset, lwin):
         lset_sorted.remove(wd)
     while len(lwin) < config['lwin_size']:
         min_score = lset_sorted[0]['score']
-        min_score_cnt = sum(
-            1 for dic in lset_sorted if dic['score'] == min_score)
+        # min_score_cnt = sum(
+        #     1 for dic in lset_sorted if dic['score'] == min_score)
         # idx = random.randrange(min_score_cnt)
         idx = 0
         lwin.append(lset_sorted.pop(idx))
@@ -82,7 +88,9 @@ def load_book(book_path):
             if line.startswith('--'):  # word separator
                 if word != '':
                     lbook.append({'id': idx, 'word': word, 'meaning': meaning,
-                                  'sentence': sentence, 'score': 0, 'tmp_score': 0, 'total_pass': 0, 'total_fail': 0})
+                                  'sentence': sentence, 'score': 0,
+                                  'tmp_score': 0, 'total_pass': 0,
+                                  'total_fail': 0})
                     idx += 1
                 word = meaning = sentence = ''
             elif word == '':
@@ -94,7 +102,9 @@ def load_book(book_path):
                     if len(worddef) > 2:
                         sentence = worddef[2]
                     lbook.append({'id': idx, 'word': word, 'meaning': meaning,
-                                  'sentence': sentence, 'score': 0, 'tmp_score': 0, 'total_pass': 0, 'total_fail': 0})
+                                  'sentence': sentence, 'score': 0,
+                                  'tmp_score': 0, 'total_pass': 0,
+                                  'total_fail': 0})
                     idx += 1
                     word = meaning = sentence = ''
                 else:
@@ -119,7 +129,6 @@ def load_book(book_path):
                     new_word['total_fail'] = old_word['total_fail']
                     new_word['score'] = old_word['score']
                     new_word['tmp_score'] = old_word['tmp_score']
-                    # print(new_word)  # ++++++++
 
     print(f"    {len(lbook)} words loaded.")
     return lbook
@@ -138,7 +147,9 @@ def save_lbook(lbook, book_path):
     pickle_path = pickle_path + ".pickle"
     with open(pickle_path, 'wb') as f:
         pickle.dump(lbook, f)
-    print(f"Saved {len(lbook)} words to {pickle_path}")
+    print(f"    *** Saved {len(lbook)} words to {pickle_path}")
+    print(
+        f"        Passed/total: {track_progress['pass']}/{track_progress['pass']+track_progress['fail']}, memorized {track_progress['memorized_count']} word(s) today.")
 
 
 def create_lset(lbook):
@@ -211,14 +222,17 @@ def study(lbook, lset, lwin, book_path):
                     f"/{w['total_pass']}/{w['total_fail']}")
             continue
         elif word['word'] == inword:
-            print("    *** Correct.  Practice once more.")
-            repeat_word(word, 1)
+            print("    *** Correct.  Practice a little more.")
+            repeat_word(word, 2)
             word['total_pass'] += 1
             word['tmp_score'] += 1
+            track_progress['pass'] += 1
             if word['tmp_score'] >= config['repeat_count']:
-                print(f"    *** You've memorized the word.")
                 word['tmp_score'] = 0
                 word['score'] += 1
+                track_progress['memorized_count'] += 1
+                print(
+                    f"    *** You've memorized the word.  {track_progress['memorized_count']} word(s) memorized today.")
                 lwin.pop(idx)
                 fill_lwin(lset, lwin)
                 if idx > 0:
@@ -229,6 +243,7 @@ def study(lbook, lset, lwin, book_path):
             if word['tmp_score'] > 0:
                 word['tmp_score'] -= 1
             word['total_fail'] += 1
+            track_progress['fail'] += 1
             repeat_word(word, config['penalty_count'])
         print('---')
         idx += 1
