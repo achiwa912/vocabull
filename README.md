@@ -2,6 +2,18 @@
 
 VocaBull is a small command line tool that helps your vocabulary building.
 
+## How VocaBull can help you
+
+With VocaBull, you can repeat typing words to memorize again and again, until you memorize them.  It tracks your progress and only challenges you with words which you have not memorized yet.
+
+It goes like this:
+* VocaBull gives you a quiz for a new word
+* If you can't type the word, you are forced to type it for 4 times
+* If you typed it correctly, you are still to type it for twice
+* VocaBull gives you quizes from outstanding 10 words so that you can focus 10 words at a specific time
+* If you typed a word correctly for several times, it deems that you have memorized theword
+* In this case, it replaces the word with a new one.  This way, outstanding 10 words are continuously changing
+
 # Prerequisites
 
 * Python 3.6 or later (It uses f-strings)
@@ -98,7 +110,11 @@ Saved 10 words to samples.pickle
 
 # Rationale
 
-To be upated.
+What is the single, most important thing to memorize new words?  I believe it's repetition.  It would be up to the individual or the difficulty of the word itself for how many times you need to repeat trying to memorize a word, but repetition is the key to memorize new words.
+
+Traditional vocabulary books or flash cards are not very efficient for the repitition process in that they don't track your progress.
+
+VocaBull is efficient in this regard.  That is, it tracks words you have memorized and word you have not yet.  And it gives you quizes only of words you have not memorized.
 
 
 # Word book file format
