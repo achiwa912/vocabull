@@ -11,8 +11,8 @@ It goes like this:
 * If you can't type the word, you are forced to type it for 4 times
 * If you typed it correctly, you are still to type it for twice
 * VocaBull gives you quizes from outstanding 10 words so that you can focus 10 words at a specific time
-* If you typed a word correctly for several times, it deems that you have memorized theword
-* In this case, it replaces the word with a new one.  This way, outstanding 10 words are continuously changing
+* If you typed a word correctly for several times, it deems that you have memorized the word
+* In this case, it replaces the word with a new one.  This way, outstanding 10 words are constantly changing
 
 # Prerequisites
 
@@ -65,7 +65,7 @@ Then, you are asked the next word.  What is one for "generous"?
 
 ## The learning window and the learning set
 
-The tool tracks your progress.  If you typed a word correctly for several times, it thinks you've memorized the word for now.  Then it removes the word from the current "learning window" and a new word will be added to it.
+VocaBull tracks your progress.  If you typed a word correctly for several times, it thinks you've memorized the word for now.  Then it removes the word from the current "learning window" and a new word will be added to it.
 
 The "learning window" consists of about 10 outstanding words.  The tool gives you quizes always from the learning window.  That is, you need to try memorizing 10 words at a specific time.  If you memorize a word or two in the learning window, they are replaced with new ones.
 
@@ -110,9 +110,9 @@ Saved 10 words to samples.pickle
 
 # Rationale
 
-What is the single, most important thing to memorize new words?  I believe it's repetition.  It would be up to the individual or the difficulty of the word itself for how many times you need to repeat trying to memorize a word, but repetition is the key to memorize new words.
+What is the single, most important thing to memorize new words?  I believe it's repetition.  It would be up to the individual or the difficulty of the word itself for how many times you need to repeat trying to memorize a word, but nonetheless repetition is the key to memorize new words.
 
-Traditional vocabulary books or flash cards are not very efficient for the repitition process in that they don't track your progress.
+Traditional vocabulary books or flash cards are not very efficient for the repitition process in that they don't track your progress.  They treat all the words equally regardless of if you already know/have memorized the words or not.
 
 VocaBull is efficient in this regard.  That is, it tracks words you have memorized and word you have not yet.  And it gives you quizes only of words you have not memorized.
 
