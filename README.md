@@ -84,12 +84,12 @@ You can use commands when you see this "*** S: save..." message.
 ```
 Instead of typing the word, you can type "S", "L" or "Q".
 
-"S" is for save.  It will save your progress.  The saved data will be loaded automatically when you run the tool with the same word book.  The save file name is <wordfile>.pickle.
+"S" is for save.  It will save your progress.  The saved data will be loaded automatically when you run the tool with the same word book.  The save file name is <wordfile>.json.
 
 ```
     *** S: save, L: show learning set, Q: save and quit
     high praise? S
-Saved 10 words to samples.pickle
+Saved 10 words to samples.json
     *** S: save, L: show learning set, Q: save and quit
     high praise? 
 ```

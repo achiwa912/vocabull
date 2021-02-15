@@ -2,7 +2,7 @@ import sys
 import random
 import operator
 from os import path
-import pickle
+import json
 
 config = {
     'lwin_size': 10,  # learning window size
@@ -115,11 +115,11 @@ def load_book(book_path):
                 sentence = line.rstrip()
 
     # load the save file if exists
-    pickle_path, _ = path.splitext(book_path)
-    pickle_path = pickle_path + ".pickle"
-    if path.exists(pickle_path):
-        with open(pickle_path, 'rb') as f:
-            old_lbook = pickle.load(f)
+    json_path, _ = path.splitext(book_path)
+    json_path = json_path + ".json"
+    if path.exists(json_path):
+        with open(json_path, 'r') as f:
+            old_lbook = json.load(f)
         for old_word in old_lbook:
             new_word = next(
                 (w for w in lbook if w['word'] == old_word['word']), None)
@@ -137,17 +137,17 @@ def load_book(book_path):
 def save_lbook(lbook, book_path):
     """
     Save the progress of the learning book.  The save file is the
-    same book file name + ".pickle" extension.
+    same book file name + ".json" extension.
 
     Parameters:
-    lbook (dict): The learning book dictionary to be pickled
+    lbook (dict): The learning book dictionary to save
     book_path (str): The path to the word book file
     """
-    pickle_path, _ = path.splitext(book_path)
-    pickle_path = pickle_path + ".pickle"
-    with open(pickle_path, 'wb') as f:
-        pickle.dump(lbook, f)
-    print(f"    *** Saved {len(lbook)} words to {pickle_path}")
+    json_path, _ = path.splitext(book_path)
+    json_path = json_path + ".json"
+    with open(json_path, 'w') as f:
+        json.dump(lbook, f)
+    print(f"    *** Saved {len(lbook)} words to {json_path}")
     print(
         f"        Passed/total: {track_progress['pass']}/{track_progress['pass']+track_progress['fail']}, memorized {track_progress['memorized_count']} word(s) today.")
 
