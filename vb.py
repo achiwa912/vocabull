@@ -194,7 +194,48 @@ def create_lset(lbook):
     return lset
 
 
+def command(command, lset, lbook, book_path):
+    """
+    run a command
+    
+    Parameters
+    command (str): A command character
+    lset (dict): Learning set
+    lbook (dict): Learning book
+    book_path: The path to the word book file
+    """
+    exittool = False  # continue
+    if command == 'S':
+        save_lbook(lbook, book_path)
+    elif command == 'Q':
+        save_lbook(lbook, book_path)
+        exittool = True  # exit program
+    elif command == 'L':
+        for w in lset:
+            print(
+                f"{w['id']} {w['word']} - {w['tmp_score']}/{w['score']}"
+                f"/{w['total_pass']}/{w['total_fail']}")
+    elif command == 'W' and config['debug'] == True:
+        # Show learning window (debug mode only)
+        for w in lwin:
+            print(
+                f"{w['id']} {w['word']} - {w['tmp_score']}/{w['score']}"
+                f"/{w['total_pass']}/{w['total_fail']}")
+    else:
+        print("    *** what?")
+    return exittool
+
+
 def study(lbook, lset, lwin, book_path):
+    """
+    Study main loop
+
+    Parameters
+    command (str): A command character
+    lset (dict): Learning set
+    lbook (dict): Learning book
+    book_path: The path to the word book file
+    """
     fill_lwin(lset, lwin)
     #idx = random.randrange(len(lwin))
     idx = 0
@@ -202,24 +243,9 @@ def study(lbook, lset, lwin, book_path):
         print("    *** S: save, L: show learning set, Q: save and quit")
         word = lwin[idx]
         inword = input(f"    {word['meaning']}? ").rstrip()
-        if inword == 'S':  # Save progress
-            save_lbook(lbook, book_path)
-            continue
-        elif inword == 'Q':
-            save_lbook(lbook, book_path)
-            return
-        # Show learning window (debug mode only)
-        elif inword == 'LL' and config['debug'] == True:
-            for w in lwin:
-                print(
-                    f"{w['id']} {w['word']} - {w['tmp_score']}/{w['score']}"
-                    f"/{w['total_pass']}/{w['total_fail']}")
-            continue
-        elif inword == 'L':  # Show learning set
-            for w in lset:
-                print(
-                    f"{w['id']} {w['word']} - {w['tmp_score']}/{w['score']}"
-                    f"/{w['total_pass']}/{w['total_fail']}")
+        if len(inword) == 1:  # command
+            if command(inword, lset, lbook, book_path):
+                return
             continue
         elif word['word'] == inword:
             print("    *** Correct.  Practice a little more.")
@@ -255,7 +281,7 @@ if __name__ == '__main__':
     if len(sys.argv) < 2:
         print(f"Usage: python {sys.argv[0]} <wordfile>")
         sys.exit()
-    print("*** VocaBull - Help your vocabulary building ***")
+    print("    *** VocaBull - Help your vocabulary building ***")
     book_path = sys.argv[1]
     lbook = load_book(book_path)
     lset = create_lset(lbook)
