@@ -12,6 +12,10 @@ config = {
     'debug': False,
 }
 
+study_flags = {
+    'all': False,  # Studying the entire book
+    }
+
 track_progress = {
     'pass': 0,  # today's pass count
     'fail': 0,  # today's fail count
@@ -55,10 +59,11 @@ def fill_lwin(lset, lwin):
         lset_sorted.remove(wd)
     while len(lwin) < config['lwin_size']:
         min_score = lset_sorted[0]['score']
-        # min_score_cnt = sum(
-        #     1 for dic in lset_sorted if dic['score'] == min_score)
-        # idx = random.randrange(min_score_cnt)
         idx = 0
+        if study_flags['all'] == True:
+            min_score_cnt = sum(
+                1 for dic in lset_sorted if dic['score'] == min_score)
+            idx = random.randrange(min_score_cnt)
         lwin.append(lset_sorted.pop(idx))
         if len(lset_sorted) == 0:
             break
@@ -175,8 +180,10 @@ def create_lset(lbook):
             i = input(f"    Which learning set to use (1-{setnum}; all)? ")
             if i.startswith('all'):
                 lset = lbook[:]
+                study_flags['all'] = True
                 break
             else:
+                study_flags['all'] = False
                 try:
                     i = int(i)
                 except:
