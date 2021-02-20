@@ -96,13 +96,18 @@ Saved 10 words to samples.json
 
 "L" shows the "current learning set".  The current learning set is the set/chapter that you are currently studying.
 
+The three numbers are from the left:
+- How many times VocaBull deemed you memorized the word
+- How many times you have failed the word
+- How many times in total you have studied the word (ie, passed + failed)
+
 ```
     *** S: save, L: show learning set, Q: save and quit
     high praise? L
-0 hyperbole - 0/0/0/1
-1 munificent - 1/0/1/0
-2 prevarication - 1/0/1/0
-3 tyro - 1/0/1/0
+0 hyperbole - 0/0/1
+1 munificent - 0/1/1
+2 prevarication - 0/1/1
+3 tyro - 0/1/1
 <snip>
 ```
 
