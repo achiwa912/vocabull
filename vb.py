@@ -14,7 +14,7 @@ config = {
 
 study_flags = {
     'all': False,  # Studying the entire book
-    }
+}
 
 track_progress = {
     'pass': 0,  # today's pass count
@@ -204,7 +204,7 @@ def create_lset(lbook):
 def command(command, lset, lbook, book_path):
     """
     run a command
-    
+
     Parameters
     command (str): A command character
     lset (dict): Learning set
@@ -220,8 +220,8 @@ def command(command, lset, lbook, book_path):
     elif command == 'L':
         for w in lset:
             print(
-                f"{w['id']} {w['word']} - {w['tmp_score']}/{w['score']}"
-                f"/{w['total_pass']}/{w['total_fail']}")
+                f"{w['id']} {w['word']} - {w['score']}"
+                f"/{w['total_fail']}/{w['total_pass']+w['total_fail']}")
     elif command == 'W' and config['debug'] == True:
         # Show learning window (debug mode only)
         for w in lwin:
