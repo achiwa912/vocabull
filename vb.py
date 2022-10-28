@@ -3,6 +3,8 @@ import random
 import operator
 from os import path
 import json
+import re
+import readline
 
 config = {
     'lwin_size': 10,  # learning window size
@@ -101,11 +103,16 @@ def load_book(book_path):
             elif word == '':
                 # For tab-separated word book format
                 if '\t' in line:
-                    worddef = line.strip().split('\t')
-                    word = worddef[0].lower()
-                    meaning = worddef[1]
-                    if len(worddef) > 2:
-                        sentence = worddef[2]
+                    m = re.search(r'^([^\t]+)\t+(.+)$', line)
+                    word, substr = m.groups()
+                    m = re.search(r'^([^\[]+)(\[.*\])?', substr)
+                    meaning, sentence = m.groups()
+                    word = word.lower().strip()
+                    meaning = meaning.strip()
+                    if sentence:
+                        sentence = sentence.strip()
+                    else:
+                        sentence = ''
                     lbook.append({'id': idx, 'word': word, 'meaning': meaning,
                                   'sentence': sentence, 'score': 0,
                                   'tmp_score': 0, 'total_pass': 0,
@@ -255,7 +262,7 @@ def study(lbook, lset, lwin, book_path):
                 return
             continue
         elif word['word'] == inword:
-            print("    *** Correct.  Practice a little more.")
+            print(f"    *** Correct ({word['tmp_score']+1}/{config['repeat_count']}).  Practice a little more.")
             repeat_word(word, 2)
             word['total_pass'] += 1
             word['tmp_score'] += 1
