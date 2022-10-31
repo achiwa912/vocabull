@@ -275,8 +275,8 @@ def study(lbook, lset, lwin, book_path):
                     f"    *** You've memorized the word.  {track_progress['memorized_count']} word(s) memorized today.")
                 lwin.pop(idx)
                 fill_lwin(lset, lwin)
-                if idx > 0:
-                    idx -= 1  # ++++++++
+                print('---')
+                continue
         else:
             print(f"    *** Incorrect.  Let's practice " +
                   str(config['penalty_count']) + " times.")
